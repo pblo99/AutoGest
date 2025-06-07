@@ -27,11 +27,11 @@ class EmpresaDAOTest {
         empresa.setEndereco("Rua Teste, 123");
         empresa.setTelefone("123456789");
 
-        empresaDAO.adicionarEmpresa(empresa);
+        empresaDAO.adicionarEmpresa(empresa); // adiciona nova empresa
 
         List<EmpresaDTO> empresas = empresaDAO.listarEmpresas();
-        EmpresaDTO ultima = empresas.get(empresas.size() - 1);
-        empresaCriadaId = ultima.getId();
+        EmpresaDTO ultima = empresas.get(empresas.size() - 1); // pega a ultima da lista
+        empresaCriadaId = ultima.getId(); // guarda o id para os proximos testes
 
         assertEquals("Empresa Teste", ultima.getNome());
     }
@@ -40,14 +40,14 @@ class EmpresaDAOTest {
     @Order(2)
     void testListarEmpresas() {
         List<EmpresaDTO> empresas = empresaDAO.listarEmpresas();
-        assertNotNull(empresas);
-        assertTrue(empresas.size() > 0);
+        assertNotNull(empresas); // lista nao pode ser nula
+        assertTrue(empresas.size() > 0); // deve conter pelo menos uma empresa
     }
 
     @Test
     @Order(3)
     void testBuscarEmpresaPorId() {
-        EmpresaDTO empresa = empresaDAO.buscarEmpresaPorId(empresaCriadaId);
+        EmpresaDTO empresa = empresaDAO.buscarEmpresaPorId(empresaCriadaId); // busca por id
         assertNotNull(empresa);
         assertEquals("Empresa Teste", empresa.getNome());
     }
@@ -60,17 +60,17 @@ class EmpresaDAOTest {
         nova.setEndereco("Rua Nova, 456");
         nova.setTelefone("987654321");
 
-        empresaDAO.atualizarEmpresa(empresaCriadaId, nova);
+        empresaDAO.atualizarEmpresa(empresaCriadaId, nova); // atualiza empresa
 
         EmpresaDTO atualizada = empresaDAO.buscarEmpresaPorId(empresaCriadaId);
-        assertEquals("Empresa Atualizada", atualizada.getNome());
+        assertEquals("Empresa Atualizada", atualizada.getNome()); // verifica se atualizou
     }
 
     @Test
     @Order(5)
     void testExcluirEmpresa() throws SQLException, ClassNotFoundException {
-        empresaDAO.excluirEmpresa(empresaCriadaId);
+        empresaDAO.excluirEmpresa(empresaCriadaId); // exclui empresa
         EmpresaDTO excluida = empresaDAO.buscarEmpresaPorId(empresaCriadaId);
-        assertNull(excluida);
+        assertNull(excluida); // empresa deve ter sido removida
     }
 }
