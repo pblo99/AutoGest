@@ -1,4 +1,4 @@
-name: CI Java com Maven
+name: CI Java com Maven + MySQL
 
 on:
   push:
@@ -10,22 +10,44 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: autogest
+          MYSQL_USER: usuario
+          MYSQL_PASSWORD: senha
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=5
+
     steps:
-    - name: Checkout do código
-      uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-    - name: Configurar JDK 21
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '21'
-        cache: 'maven'
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
 
-    - name: Compilar projeto
-      run: mvn -B compile
+      - name: Aguardar o MySQL iniciar
+        run: sleep 20
 
-    - name: Rodar testes
-      run: mvn -B test
+      - name: Importar o banco de dados
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+          mysql -h 127.0.0.1 -uusuario -psenha autogest < db/init.sql
 
-    - name: Verificar build completo
-      run: mvn -B verify
+      - name: Compilar projeto
+        run: mvn -B compile
+
+      - name: Rodar testes
+        env:
+          DB_URL: jdbc:mysql://127.0.0.1:3306/autogest
+          DB_USER: usuario
+          DB_PASSWORD: senha
+        run: mvn -B test
