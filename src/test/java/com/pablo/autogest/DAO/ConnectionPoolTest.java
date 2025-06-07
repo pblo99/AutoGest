@@ -31,20 +31,20 @@ class ConnectionPoolTest {
     @Test
     void testConnectionNotNull() {
         try (Connection conn = ConnectionPool.getConnection()) {
-            assertNotNull(conn, "A conexão não deve ser nula");
-            assertFalse(conn.isClosed(), "A conexão deve estar aberta");
+            assertNotNull(conn); // verifica se conexao foi criada
+            assertFalse(conn.isClosed()); // verifica se conexao esta aberta
         } catch (Exception e) {
-            fail("Erro ao obter conexão: " + e.getMessage());
+            fail("Erro ao obter conexao: " + e.getMessage());
         }
     }
 
     @Test
     public void testGetConnection() throws Exception {
         try (Connection result = ConnectionPool.getConnection()) {
-            assertNotNull(result, "A conexão não deve ser nula");
-            assertFalse(result.isClosed(), "A conexão deve estar aberta");
+            assertNotNull(result); // conexao nao deve ser nula
+            assertFalse(result.isClosed()); // conexao deve estar ativa
         } catch (Exception e) {
-            fail("Erro ao obter conexão: " + e.getMessage());
+            fail("Erro ao obter conexao: " + e.getMessage());
         }
     }
 
