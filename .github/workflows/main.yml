@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -21,8 +20,13 @@ jobs:
         distribution: 'temurin'
         java-version: '21'
 
+    - name: Verificar estrutura de diretórios
+      run: ls -R
+
     - name: Compilar projeto com Maven
       run: mvn -B compile
+      working-directory: ./
 
     - name: Rodar testes com Maven
       run: mvn -B test
+      working-directory: ./
