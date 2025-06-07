@@ -10,12 +10,12 @@ class ConexaoDAOTest {
 
     @Test
     void testConnectaBD() {
-        ConexaoDAO conexaoDAO = new ConexaoDAO();
-        try (Connection connection = conexaoDAO.connectaBD()) {
-            assertNotNull(connection, "A conexão não deveria ser nula");
-            assertFalse(connection.isClosed(), "A conexão não deveria estar fechada");
+        ConexaoDAO conexaoDAO = new ConexaoDAO(); // cria instancia da classe de conexao
+        try (Connection connection = conexaoDAO.connectaBD()) { // tenta abrir conexao
+            assertNotNull(connection, "A conexao nao deveria ser nula"); // verifica se conexao existe
+            assertFalse(connection.isClosed(), "A conexao nao deveria estar fechada"); // verifica se esta aberta
         } catch (Exception e) {
-            fail("Erro ao obter conexão: " + e.getMessage());
+            fail("Erro ao obter conexao: " + e.getMessage()); // falha se der erro na conexao
         }
     }
 }
