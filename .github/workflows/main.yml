@@ -8,21 +8,20 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout do código
-      uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-    - name: Configurar JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '21'
+      - name: Configurar JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
-    - name: Compilar projeto com Maven
-      run: mvn -B compile
+      - name: Compilar projeto com Maven
+        run: mvn -B compile
 
-    - name: Rodar testes com Maven
-      run: mvn -B test
+      - name: Rodar testes com Maven
+        run: mvn -B test
