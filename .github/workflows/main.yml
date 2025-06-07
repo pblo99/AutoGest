@@ -1,4 +1,4 @@
-name: Java CI
+name: CI Java com Maven
 
 on:
   push:
@@ -8,21 +8,24 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout do código
       uses: actions/checkout@v3
 
-    - name: Configurar JDK
+    - name: Configurar JDK 21
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
         java-version: '21'
+        cache: 'maven'
 
-    - name: Compilar projeto com Maven
+    - name: Compilar projeto
       run: mvn -B compile
 
-    - name: Rodar testes com Maven
+    - name: Rodar testes
       run: mvn -B test
+
+    - name: Verificar build completo
+      run: mvn -B verify

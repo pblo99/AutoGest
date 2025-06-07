@@ -1,16 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.pablo.autogest;
 
-/**
- *
- * @author Pablo
- */
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.pablo.autogest.VIEW.telaOficina;
+import javax.swing.UIManager;
+
+
 public class AutoGest {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception ex) {
+            System.err.println("Failed to initialize LaF");
+        }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                telaOficina tela = new telaOficina();
+                tela.setTitle("Oficina");
+                tela.setVisible(true);
+            }
+        });
     }
 }
